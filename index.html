@@ -130,13 +130,47 @@ contract U is S(&quot;s&quot;),T(&quot;t&quot;)&#123;
 <h6 id="运行构造函数顺序"><a href="#运行构造函数顺序" class="headerlink" title="运行构造函数顺序"></a>运行构造函数顺序</h6><p>合约按照继承顺序运行</p>
 <h4 id="调用父级合约函数"><a href="#调用父级合约函数" class="headerlink" title="调用父级合约函数"></a>调用父级合约函数</h4><h6 id="直接调用"><a href="#直接调用" class="headerlink" title="直接调用"></a>直接调用</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A.foo();</span><br></pre></td></tr></table></figure>
 
-<h6 id="使用super"><a href="#使用super" class="headerlink" title="使用super"></a>使用super</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">super.bar();//自己寻找调用什么合约</span><br></pre></td></tr></table></figure></li>
+<h6 id="使用super"><a href="#使用super" class="headerlink" title="使用super"></a>使用super</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">super.bar();//自己寻找调用什么合约</span><br></pre></td></tr></table></figure>
+
+<p>如果继承多个父类，默认情况下super.xxx() 会调用继承树后的最后一个父类的xxx(); 但是当前继承的父类的xxx()都调用了super，那么才会调用所有继承树上的父类的xxx()</p>
+<h2 id="抽象合约abstract和接口interface"><a href="#抽象合约abstract和接口interface" class="headerlink" title="抽象合约abstract和接口interface"></a>抽象合约abstract和接口interface</h2><h3 id="抽象合约"><a href="#抽象合约" class="headerlink" title="抽象合约"></a>抽象合约</h3><p><strong>ERC721标准</strong>:定义了智能合约的接口，使得每个代币都是独一无二的，并且可以代表一个数字或实体资产的所有权</p>
+<p><strong><u>abstract</u><strong>：当智能合约中至少有一个未实现的函数，某个函数缺少主体{}的内容，则需要将合约标记为</strong>abstract</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">abstract contract A&#123;</span><br><span class="line">function _A(uint[] memory a)public pure virtual returns(uint[] memory);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h3><h5 id="规则："><a href="#规则：" class="headerlink" title="规则："></a>规则：</h5><ol>
+<li><p>不能包含状态变量，构造函数</p>
+</li>
+<li><p>不能继承除接口外的其他合约</p>
+</li>
+<li><p>所有函数必须是external且不能有函数体</p>
+</li>
+<li><p>继承接口的非抽象合约必须实现接口定义的所有功能</p>
+<p>接口与常规合约的区别在于<strong>每个函数以“；”代替“{ }结尾”</strong></p>
+<h5 id="什么时候用接口："><a href="#什么时候用接口：" class="headerlink" title="什么时候用接口："></a>什么时候用接口：</h5><ol>
+<li>如果我们知道一个合约实现了<code>IERC721</code>接口，我们不需要知道它具体代码实现，只需要知道合约地址就可以与它交互。</li>
 </ol>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h2><h3 id="Error自定义错误"><a href="#Error自定义错误" class="headerlink" title="Error自定义错误"></a>Error自定义错误</h3><p><strong>特点</strong>：0.8.4新加内容、节省gas</p>
+<p>error与revert连用</p>
+<h4 id="revert"><a href="#revert" class="headerlink" title="revert"></a>revert</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if(i&gt;10)&#123;</span><br><span class="line">revert(&quot;i&gt;10&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="require"><a href="#require" class="headerlink" title="require"></a>require</h3><p>require(检查条件，”异常的描述”)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">require(i&lt;=10,&quot;i&gt;10&quot;);</span><br><span class="line">//code</span><br></pre></td></tr></table></figure>
+
+<h3 id="assert断言"><a href="#assert断言" class="headerlink" title="assert断言"></a>assert断言</h3><p>不能解释抛出异常的原因</p>
+<p><code>assert(检查条件)</code></p>
+<p>条件不成立就会抛出异常</p>
+<h3 id="三种方法的gas比较"><a href="#三种方法的gas比较" class="headerlink" title="三种方法的gas比较"></a>三种方法的gas比较</h3><p><code>error</code>方法<code>gas</code>最少，其次是<code>assert</code>，<code>require</code>方法消耗<code>gas</code>最多！因此，<code>error</code>既可以告知用户抛出异常的原因，又能省<code>gas</code>，要多用！</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/12/08/Solidity101/" data-id="cm4f9f19b00007cv9081b7780" data-title="Solidity101" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/12/08/Solidity101/" data-id="cm4o68ahk00000cv9ghqvf48i" data-title="Solidity101" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -176,7 +210,7 @@ contract U is S(&quot;s&quot;),T(&quot;t&quot;)&#123;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/12/06/A-New-Life/" data-id="cm4f9dh070000pcv9fcwlgqob" data-title="A New Life" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/12/06/A-New-Life/" data-id="cm4o68ahq00030cv96rsv0yyd" data-title="A New Life" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -227,7 +261,7 @@ contract U is S(&quot;s&quot;),T(&quot;t&quot;)&#123;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/12/06/hello-world/" data-id="cm4f9dh0b0001pcv9h6eqhovo" data-title="Hello World" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/12/06/hello-world/" data-id="cm4o68ahn00010cv92nij2h64" data-title="Hello World" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
