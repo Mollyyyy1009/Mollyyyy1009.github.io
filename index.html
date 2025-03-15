@@ -1,325 +1,161 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  
-  
-  <title>Hexo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta property="og:type" content="website">
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Hexo</title><meta name="author" content="John Doe"><meta name="copyright" content="John Doe"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta property="og:type" content="website">
 <meta property="og:title" content="Hexo">
 <meta property="og:url" content="http://example.com/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/img/butterfly-icon.png">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
-  
-    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
-  
-  
-    <link rel="shortcut icon" href="/favicon.png">
-  
-  
-  
-<link rel="stylesheet" href="/css/style.css">
+<meta name="twitter:image" content="http://example.com/img/butterfly-icon.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
 
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
   
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
     
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
-
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
   
-  
-<meta name="generator" content="Hexo 7.3.0"></head>
-
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
-      </h1>
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Hexo',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'home'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div class="page" id="body-wrap"><header class="full_page" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Hexo</span></a></span><div id="menus"></div></nav><div id="site-info"><h1 id="site-title">Hexo</h1></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts nc" id="recent-posts"><div class="recent-post-items"><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/12/08/Solidity101/" title="Solidity101">Solidity101</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2024-12-08T06:14:25.000Z" title="Created 2024-12-08 14:14:25">2024-12-08</time></span></div><div class="content">WTF Solidity101 学习继承继承可以节省代码量 type :1.简单继承 2.多重继承 3.修饰器，构造函数继承 规则1.父合约中的函数，希望子合约重写则需要加上virtual 2.子合约重写父合约函数需要加上override 简单继承 对于子合约 123contract B is A&#123; //code&#125;  B合约中的函数如果是运用A合约中的逻辑并进行重写，那么返回的是B合约的内容。如果是直接继承A合约的函数，则返回A合约内容。 多线继承从基础到派生的顺序关系：继承最少的合约在前面 12345contract Z is X,Y&#123;  function c()public pure override(X,Y) returns (string memory)&#123;//括号内X，Y顺序不重要  return &quot;Z&quot;;  &#125;&#125;  最后返回的是Z 运行父合约构造函数输入构造函数参数的方法：已知参数内容  contract S&#123; string public...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/12/06/A-New-Life/" title="A New Life">A New Life</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2024-12-06T12:54:20.000Z" title="Created 2024-12-06 20:54:20">2024-12-06</time></span></div><div class="content">Welcome To My Blog.</div></div></div></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">John Doe</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">2</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/08/Solidity101/" title="Solidity101">Solidity101</a><time datetime="2024-12-08T06:14:25.000Z" title="Created 2024-12-08 14:14:25">2024-12-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/06/A-New-Life/" title="A New Life">A New Life</a><time datetime="2024-12-06T12:54:20.000Z" title="Created 2024-12-06 20:54:20">2024-12-06</time></div></div></div></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>Tags</span></div><div class="card-tag-cloud"><a href="/tags/Solidity/" style="font-size: 1.1em; color: #999">Solidity</a></div></div><div class="card-widget card-archives">
+    <div class="item-headline">
+      <i class="fas fa-archive"></i>
+      <span>Archives</span>
       
     </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-        
-          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
-        
-        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
-      </div>
-    </div>
-  </div>
-</header>
-
-      <div class="outer">
-        <section id="main">
   
-    <article id="post-Solidity101" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2024/12/08/Solidity101/" class="article-date">
-  <time class="dt-published" datetime="2024-12-08T06:14:25.000Z" itemprop="datePublished">2024-12-08</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2024/12/08/Solidity101/">Solidity101</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
+    <ul class="card-archive-list">
       
-        <h1 id="WTF-Solidity101-学习"><a href="#WTF-Solidity101-学习" class="headerlink" title="WTF Solidity101 学习"></a>WTF Solidity101 学习</h1><h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><p>继承可以节省代码量</p>
-<h4 id="type"><a href="#type" class="headerlink" title="type :"></a>type :</h4><p>1.简单继承</p>
-<p>2.多重继承</p>
-<p>3.修饰器，构造函数继承</p>
-<h4 id="规则"><a href="#规则" class="headerlink" title="规则"></a>规则</h4><p>1.父合约中的函数，希望子合约重写则需要加上<strong>virtual</strong></p>
-<p>2.子合约重写父合约函数需要加上<strong>override</strong></p>
-<h4 id="简单继承"><a href="#简单继承" class="headerlink" title="简单继承"></a>简单继承</h4><ol>
-<li><p>对于子合约</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">contract B is A&#123;</span><br><span class="line"> //code</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>B合约中的函数如果是运用A合约中的逻辑并进行重写，那么返回的是B合约的内容。如果是直接继承A合约的函数，则返回A合约内容。</p>
-<h4 id="多线继承"><a href="#多线继承" class="headerlink" title="多线继承"></a>多线继承</h4><p>从基础到派生的顺序关系：<strong>继承最少的合约</strong>在前面</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">contract Z is X,Y&#123;</span><br><span class="line">  function c()public pure override(X,Y) returns (string memory)&#123;//括号内X，Y顺序不重要</span><br><span class="line">  return &quot;Z&quot;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>最后返回的是Z</p>
-<h4 id="运行父合约构造函数"><a href="#运行父合约构造函数" class="headerlink" title="运行父合约构造函数"></a>运行父合约构造函数</h4><h6 id="输入构造函数参数的方法："><a href="#输入构造函数参数的方法：" class="headerlink" title="输入构造函数参数的方法："></a>输入构造函数参数的方法：</h6><p>已知参数内容</p>
-<ol>
-<li><pre><code class="solidity">contract S&#123;
-string public name;
-constructor(string memory _name)&#123;
-name=_name;
-&#125;
-&#125;
-contract T&#123;
-string public text;
-constructor(string memory _text)&#123;
-text = _text;
-&#125;
-&#125;
-contract U is S(&quot;s&quot;),T(&quot;t&quot;)&#123;
-&#125;
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">2. 不知参数内容，部署时输入</span><br><span class="line"></span><br><span class="line">   ```solidity</span><br><span class="line">   contract V is S,T&#123;</span><br><span class="line">   constructor (string memory _name,string memory _text)S(_name) T(_text)&#123;</span><br><span class="line">   </span><br><span class="line">   &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-</code></pre>
-</li>
-</ol>
-<p>以上两种方法也可以混合使用。</p>
-<h6 id="运行构造函数顺序"><a href="#运行构造函数顺序" class="headerlink" title="运行构造函数顺序"></a>运行构造函数顺序</h6><p>合约按照继承顺序运行</p>
-<h4 id="调用父级合约函数"><a href="#调用父级合约函数" class="headerlink" title="调用父级合约函数"></a>调用父级合约函数</h4><h6 id="直接调用"><a href="#直接调用" class="headerlink" title="直接调用"></a>直接调用</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A.foo();</span><br></pre></td></tr></table></figure>
-
-<h6 id="使用super"><a href="#使用super" class="headerlink" title="使用super"></a>使用super</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">super.bar();//自己寻找调用什么合约</span><br></pre></td></tr></table></figure>
-
-<p>如果继承多个父类，默认情况下super.xxx() 会调用继承树后的最后一个父类的xxx(); 但是当前继承的父类的xxx()都调用了super，那么才会调用所有继承树上的父类的xxx()</p>
-<h2 id="抽象合约abstract和接口interface"><a href="#抽象合约abstract和接口interface" class="headerlink" title="抽象合约abstract和接口interface"></a>抽象合约abstract和接口interface</h2><h3 id="抽象合约"><a href="#抽象合约" class="headerlink" title="抽象合约"></a>抽象合约</h3><p><strong>ERC721标准</strong>:定义了智能合约的接口，使得每个代币都是独一无二的，并且可以代表一个数字或实体资产的所有权</p>
-<p><strong><u>abstract</u><strong>：当智能合约中至少有一个未实现的函数，某个函数缺少主体{}的内容，则需要将合约标记为</strong>abstract</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">abstract contract A&#123;</span><br><span class="line">function _A(uint[] memory a)public pure virtual returns(uint[] memory);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h3><h5 id="规则："><a href="#规则：" class="headerlink" title="规则："></a>规则：</h5><ol>
-<li><p>不能包含状态变量，构造函数</p>
-</li>
-<li><p>不能继承除接口外的其他合约</p>
-</li>
-<li><p>所有函数必须是external且不能有函数体</p>
-</li>
-<li><p>继承接口的非抽象合约必须实现接口定义的所有功能</p>
-<p>接口与常规合约的区别在于<strong>每个函数以“；”代替“{ }结尾”</strong></p>
-<h5 id="什么时候用接口："><a href="#什么时候用接口：" class="headerlink" title="什么时候用接口："></a>什么时候用接口：</h5><ol>
-<li>如果我们知道一个合约实现了<code>IERC721</code>接口，我们不需要知道它具体代码实现，只需要知道合约地址就可以与它交互。</li>
-</ol>
-</li>
-</ol>
-</li>
-</ol>
-<h2 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h2><h3 id="Error自定义错误"><a href="#Error自定义错误" class="headerlink" title="Error自定义错误"></a>Error自定义错误</h3><p><strong>特点</strong>：0.8.4新加内容、节省gas</p>
-<p>error与revert连用</p>
-<h4 id="revert"><a href="#revert" class="headerlink" title="revert"></a>revert</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if(i&gt;10)&#123;</span><br><span class="line">revert(&quot;i&gt;10&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="require"><a href="#require" class="headerlink" title="require"></a>require</h3><p>require(检查条件，”异常的描述”)</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">require(i&lt;=10,&quot;i&gt;10&quot;);</span><br><span class="line">//code</span><br></pre></td></tr></table></figure>
-
-<h3 id="assert断言"><a href="#assert断言" class="headerlink" title="assert断言"></a>assert断言</h3><p>不能解释抛出异常的原因</p>
-<p><code>assert(检查条件)</code></p>
-<p>条件不成立就会抛出异常</p>
-<h3 id="三种方法的gas比较"><a href="#三种方法的gas比较" class="headerlink" title="三种方法的gas比较"></a>三种方法的gas比较</h3><p><code>error</code>方法<code>gas</code>最少，其次是<code>assert</code>，<code>require</code>方法消耗<code>gas</code>最多！因此，<code>error</code>既可以告知用户抛出异常的原因，又能省<code>gas</code>，要多用！</p>
-
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2024/12/">
+            <span class="card-archive-list-date">
+              December 2024
+            </span>
+            <span class="card-archive-list-count">2</span>
+          </a>
+        </li>
       
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2024/12/08/Solidity101/" data-id="cm8aabahr0002zsv99xft95h9" data-title="Solidity101" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Solidity/" rel="tag">Solidity</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-A-New-Life" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2024/12/06/A-New-Life/" class="article-date">
-  <time class="dt-published" datetime="2024-12-06T12:54:20.000Z" itemprop="datePublished">2024-12-06</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2024/12/06/A-New-Life/">A New Life</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h1 id="Welcome-To-My-Blog"><a href="#Welcome-To-My-Blog" class="headerlink" title="Welcome To My Blog."></a>Welcome To My Blog.</h1>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2024/12/06/A-New-Life/" data-id="cm8aabahk0001zsv99ts7awm7" data-title="A New Life" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-
-
-</section>
-        
-          <aside id="sidebar">
-  
-    
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Solidity/" rel="tag">Solidity</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/Solidity/" style="font-size: 10px;">Solidity</a>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/12/">December 2024</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2024/12/08/Solidity101/">Solidity101</a>
-          </li>
-        
-          <li>
-            <a href="/2024/12/06/A-New-Life/">A New Life</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      
-      &copy; 2025 John Doe<br>
-      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
-
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
-    
-
-
-<script src="/js/jquery-3.6.4.min.js"></script>
-
-
-
-  
-<script src="/fancybox/jquery.fancybox.min.js"></script>
-
-
-
-
-<script src="/js/script.js"></script>
-
-
-
-
-
-  </div>
-</body>
-</html>
+    </ul>
+  </div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>Website Info</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">Article Count :</div><div class="item-count">2</div></div><div class="webinfo-item"><div class="item-name">Unique Visitors :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">Page Views :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">Last Update :</div><div class="item-count" id="last-push-date" data-lastPushDate="2025-03-15T14:21:57.516Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By John Doe</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.5</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
