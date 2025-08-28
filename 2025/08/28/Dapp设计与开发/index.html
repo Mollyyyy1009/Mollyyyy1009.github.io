@@ -1,0 +1,189 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Dapp设计与开发 | Molly's blog</title><meta name="author" content="Molly"><meta name="copyright" content="Molly"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="区块链基本概念回顾账户与钱包-私钥、公钥与地址的生产方式核心概念与关系从上至下，单项推导：私钥 → 公钥 → 地址 私钥：随机产生的一个字符串，包括字母和数字。。谁拥有私钥，谁就拥有账户的所有权。 公钥：根据私钥计算。由私钥通过椭圆曲线密码学 计算得出。可以公开，用于验证签名。 Public_Key &#x3D; Private_Key * G 地址：由公钥通过哈希函数 (Keccak-256) 计算得出。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dapp设计与开发">
+<meta property="og:url" content="http://example.com/2025/08/28/Dapp%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%BC%80%E5%8F%91/index.html">
+<meta property="og:site_name" content="Molly&#39;s blog">
+<meta property="og:description" content="区块链基本概念回顾账户与钱包-私钥、公钥与地址的生产方式核心概念与关系从上至下，单项推导：私钥 → 公钥 → 地址 私钥：随机产生的一个字符串，包括字母和数字。。谁拥有私钥，谁就拥有账户的所有权。 公钥：根据私钥计算。由私钥通过椭圆曲线密码学 计算得出。可以公开，用于验证签名。 Public_Key &#x3D; Private_Key * G 地址：由公钥通过哈希函数 (Keccak-256) 计算得出。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/img/butterfly-icon.png">
+<meta property="article:published_time" content="2025-08-28T13:31:04.495Z">
+<meta property="article:modified_time" content="2025-08-28T14:28:15.497Z">
+<meta property="article:author" content="Molly">
+<meta property="article:tag" content="Dapp">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/butterfly-icon.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Dapp设计与开发",
+  "url": "http://example.com/2025/08/28/Dapp%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%BC%80%E5%8F%91/",
+  "image": "http://example.com/img/butterfly-icon.png",
+  "datePublished": "2025-08-28T13:31:04.495Z",
+  "dateModified": "2025-08-28T14:28:15.497Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Molly",
+      "url": "http://example.com/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2025/08/28/Dapp%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%BC%80%E5%8F%91/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Dapp设计与开发',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Molly's blog</span></a><a class="nav-page-title" href="/"><span class="site-name">Dapp设计与开发</span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">Dapp设计与开发</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2025-08-28T13:31:04.495Z" title="Created 2025-08-28 21:31:04">2025-08-28</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2025-08-28T14:28:15.497Z" title="Updated 2025-08-28 22:28:15">2025-08-28</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="区块链基本概念回顾"><a href="#区块链基本概念回顾" class="headerlink" title="区块链基本概念回顾"></a>区块链基本概念回顾</h1><h2 id="账户与钱包-私钥、公钥与地址的生产方式"><a href="#账户与钱包-私钥、公钥与地址的生产方式" class="headerlink" title="账户与钱包-私钥、公钥与地址的生产方式"></a>账户与钱包-私钥、公钥与地址的生产方式</h2><h3 id="核心概念与关系"><a href="#核心概念与关系" class="headerlink" title="核心概念与关系"></a>核心概念与关系</h3><p><strong>从上至下，单项推导</strong>：私钥 → 公钥 → 地址</p>
+<p><strong>私钥</strong>：随机产生的一个字符串，包括字母和数字。。<strong>谁拥有私钥，谁就拥有账户的所有权。</strong></p>
+<p><strong>公钥</strong>：根据私钥计算。由私钥通过<strong>椭圆曲线密码学</strong> 计算得出。可以公开，用于验证签名。 <code>Public_Key = Private_Key * G</code></p>
+<p><strong>地址</strong>：由公钥通过<strong>哈希函数 (Keccak-256)</strong> 计算得出。可以公开，作为接收资金的标识。<strong>Keccak-256</strong> 哈希函数（以太坊），或者 <strong>RIPEMD-160</strong> 和 <strong>SHA-256</strong>（比特币）。</p>
+<h3 id="钱包"><a href="#钱包" class="headerlink" title="钱包"></a>钱包</h3><p>​	钱包不是装币的容器，而是管理私钥的工具。</p>
+<p><strong>分类</strong>：</p>
+<ol>
+<li><strong>非托管钱包</strong>：<strong>你真正拥有私钥</strong>。私钥由你本地生成和存储（如MetaMask、Ledger、Trezor）。<strong>你的资产完全由你控制。</strong></li>
+<li><strong>托管钱包</strong>：交易所（如Binance, Coinbase）为你持有私钥。你使用账户密码登录。<strong>你的资产由交易所托管，风险与此并存。</strong></li>
+</ol>
+<p><strong>类型</strong>：纸钱包、冷钱包、热钱包、网页钱包、手机钱包、硬件钱包、交易所、随即钱包、种子钱包</p>
+<p><strong>私钥保管方式</strong>：助记词——钱包的主钥匙</p>
+<p>​	助记词是一组12或24个英文单词（来自BIP39标准单词列表）。通过一种确定性算法（BIP39），<strong>这一组助记词可以推导出无数个私钥和地址</strong>。这意味着你只需要备份这一组单词，就可以恢复你整个钱包（所有账户和资产）。</p>
+<p>​	助记词通过 <strong>PBKDF2</strong> 函数生成一个<strong>种子 (Seed)<strong>，这个种子再通过</strong>分层确定性 (HD)</strong> 结构生成所有私钥。所以：<strong>助记词 → 种子 → 主私钥 → 无数子私钥 → 无数公钥 → 无数地址</strong></p>
+<h2 id="区块链浏览器"><a href="#区块链浏览器" class="headerlink" title="区块链浏览器"></a>区块链浏览器</h2><p>​	区块链浏览器是一个可以查询区块链上所有公开数据的网站。区块链是公开透明的分布式账本。浏览器就是这个账本的交互式可视化界面。可以通过它查看任何一笔交易、任何一个地址的余额、任何一个区块的详情以及智能合约的活动。</p>
+<h2 id="产品开发流程"><a href="#产品开发流程" class="headerlink" title="产品开发流程"></a>产品开发流程</h2><p><strong>分析需求-&gt;开发-&gt;测试＋审计-&gt;部署到测试网-&gt;生产环境</strong></p>
+<h2 id="Provider-Relay-Network"><a href="#Provider-Relay-Network" class="headerlink" title="Provider&#x2F;Relay Network"></a>Provider&#x2F;Relay Network</h2><ul>
+<li><code>Infura</code>基本使用</li>
+<li>其他主网提供的节点</li>
+</ul>
+<p>​	简单来说，Provider 是一个允许你的应用程序（如钱包、<code>DApp</code>）与区块链网络通信的桥梁，是一个提供了 <strong>JSON-RPC</strong> 接口的服务器节点。应用程序通过向这个接口发送请求（如“获取这个地址的余额”、“发送这笔交易”）来与区块链交互。在<code> MetaMask</code> 的网络设置中，填写的 <strong>“RPC URL”</strong> 就是 Provider 的地址。</p>
+<p>​	如果说 Provider 是查询的网关，那么 Relay Network 主要是为了解决“交易提交”的公平性和效率问题。中继网络是一个介于用户（发送者）和区块构建者（Builder）之间的网络。它的核心目的是<strong>接收交易，并隐私地、公平地将其传递给区块构建者</strong>，避免交易信息在进入公共内存池时被MEV机器人利用。</p>
+<p>​	所有的 Relay 都可以看作是一种特殊功能的 Provider，但并非所有的 Provider 都是 Relay。</p>
+<h1 id="NFT交易市场简介"><a href="#NFT交易市场简介" class="headerlink" title="NFT交易市场简介"></a>NFT交易市场简介</h1><p>​	NFT交易市场是一个专门用于买卖、交易NFT（非同质化代币）的线上平台。所有交易都以加密货币进行，并通过智能合约自动执行。</p>
+<p>​	它的核心功能是<strong>为NFT的创造者（Creator）和收藏者（Collector）提供一个相遇、展示和交易的场所</strong>。</p>
+<p><strong>主流市场</strong>：</p>
+<p><code>OpenSea</code>,<code>Blur</code>,<code>LoolsRare</code>…</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="http://example.com">Molly</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="http://example.com/2025/08/28/Dapp%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%BC%80%E5%8F%91/">http://example.com/2025/08/28/Dapp%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%BC%80%E5%8F%91/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Dapp/">Dapp</a></div><div class="post-share"><div class="social-share" data-image="/img/butterfly-icon.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2025/08/23/Java/" title="Java"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">Previous</div><div class="info-item-2">Java</div></div><div class="info-2"><div class="info-item-1">变量​	变量本质上代编一个可操作的存储空间，空间位置确定，但内部的值不确定。可通过变量名访问对应的存储空间，以此来操作空间内的值。。 变量的学习：  声明：变量不可以重复定义。 12int age;int a,b;  赋值 12age=18;int age=18;//变量的赋值和定义可以写在同一行  使用 12System.out.println(age);System.out.println(age+20);  变量的内存：变量的数据类型决定了存储空间大小 数据类型分类  基本数据类型  数值型 整数类型（byte、short、int、long） 浮点（float、double）   字符型 char 布尔型 bool   引用数据类型  类 class 接口 interface 数组  123456789101112131415161718//基本数据类型       //1.整数类型       byte a = 10;//表数范围：-128~127       short b = 12345;//表数范围：±30000       int c =...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Molly</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">4</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8C%BA%E5%9D%97%E9%93%BE%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E5%9B%9E%E9%A1%BE"><span class="toc-number">1.</span> <span class="toc-text">区块链基本概念回顾</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B4%A6%E6%88%B7%E4%B8%8E%E9%92%B1%E5%8C%85-%E7%A7%81%E9%92%A5%E3%80%81%E5%85%AC%E9%92%A5%E4%B8%8E%E5%9C%B0%E5%9D%80%E7%9A%84%E7%94%9F%E4%BA%A7%E6%96%B9%E5%BC%8F"><span class="toc-number">1.1.</span> <span class="toc-text">账户与钱包-私钥、公钥与地址的生产方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%E4%B8%8E%E5%85%B3%E7%B3%BB"><span class="toc-number">1.1.1.</span> <span class="toc-text">核心概念与关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%92%B1%E5%8C%85"><span class="toc-number">1.1.2.</span> <span class="toc-text">钱包</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8C%BA%E5%9D%97%E9%93%BE%E6%B5%8F%E8%A7%88%E5%99%A8"><span class="toc-number">1.2.</span> <span class="toc-text">区块链浏览器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%A7%E5%93%81%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B"><span class="toc-number">1.3.</span> <span class="toc-text">产品开发流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Provider-Relay-Network"><span class="toc-number">1.4.</span> <span class="toc-text">Provider&#x2F;Relay Network</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#NFT%E4%BA%A4%E6%98%93%E5%B8%82%E5%9C%BA%E7%AE%80%E4%BB%8B"><span class="toc-number">2.</span> <span class="toc-text">NFT交易市场简介</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/08/28/Dapp%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%BC%80%E5%8F%91/" title="Dapp设计与开发">Dapp设计与开发</a><time datetime="2025-08-28T13:31:04.495Z" title="Created 2025-08-28 21:31:04">2025-08-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/08/23/Java/" title="Java">Java</a><time datetime="2025-08-23T07:21:33.980Z" title="Created 2025-08-23 15:21:33">2025-08-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/07/22/Ethernaut/" title="Ethernaut">Ethernaut</a><time datetime="2025-07-22T08:59:29.738Z" title="Created 2025-07-22 16:59:29">2025-07-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/07/21/Solidity/" title="Solidity">Solidity</a><time datetime="2025-07-21T07:35:16.459Z" title="Created 2025-07-21 15:35:16">2025-07-21</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By Molly</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.5</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
